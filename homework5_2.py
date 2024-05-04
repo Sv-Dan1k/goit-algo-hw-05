@@ -4,14 +4,14 @@ from typing import Callable
 
 def generator_numbers(text_to_scan: str):
     pattern = re.compile(r"\d+[.,]?\d+")
-    numbers_iter = pattern.finditer(text_to_scan)
+    numbers_iter = pattern.finditer(text_to_scan)  # Відокремлення всіх букв та зайвих знаків.
     for number in numbers_iter:
         yield float(number.group())
 
 
 def sum_profit(text_to_scan: str, func: Callable)-> float:
     total_revenue = 0
-    for income in func(text_to_scan):
+    for income in func(text_to_scan):  # Використання переданої функції
         total_revenue += income
     return total_revenue
 
