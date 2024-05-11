@@ -4,7 +4,7 @@ from typing import Callable
 
 # Функція яка аналізує текст та ідентифіковує всі дійсні числа, і повертати їх як генератор.
 def generator_numbers(text_to_scan: str):
-    pattern = re.compile(r"\d+[.,]?\d+")    # Відокремлення всіх букв та зайвих знаків.
+    pattern = re.compile(r" \d+[.]?\d+ " )  # Відокремлення всіх букв та зайвих знаків.
     numbers_iter = pattern.finditer(text_to_scan)  
     for number in numbers_iter:
         yield float(number.group())   
@@ -22,4 +22,5 @@ total_income = sum_profit(text, generator_numbers)
 
 
 print(f"Total income: {total_income}")
+
 
