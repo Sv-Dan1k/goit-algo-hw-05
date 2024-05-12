@@ -6,11 +6,11 @@ def input_error(func):
         try:
             return func(*args, **kwargs)
         except ValueError:
-            print("Give me name and phone please")
+            return "Give me name and phone please"
         except KeyError:
-            print("Enter user name")
+            return "Enter user name"
         except IndexError:
-            print("Enter the argument for the command")
+            return "Enter the argument for the command"
     return inner
 
 
@@ -31,26 +31,26 @@ def add_contact(args, contacts):
 def change_contact(name, new_phone):
     if name in contacts:
         contacts[name] = new_phone
-        print("Contact updated.")
+        return "Contact updated."
     else:
-        print("Contact not found.")
+        return "Contact not found."
 
 
 @input_error
 def show_phone(name):
     if name in contacts:
-        print(contacts[name])
+        return contacts[name]
     else:
-        print("Contact not found.")
+        return "Contact not found."
 
 
 @input_error
 def show_all():
     if contacts:
         for name, phone in contacts.items():
-            print(f"{name}: {phone}")
+            return f"{name}: {phone}"
     else:
-        print("No contacts saved.")
+        return "No contacts saved."
 
 
 def main():
