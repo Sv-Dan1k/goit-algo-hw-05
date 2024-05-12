@@ -70,13 +70,13 @@ def main():
             args = parts[1:] if len(parts) > 1 else []
 
             if command == "add" and len(args) == 2:
-                add_contact(*args)
+                print(add_contact(*args))
             elif command == "change" and len(args) == 2:
-                change_contact(*args)
+                print(change_contact(*args))
             elif command == "phone" and len(args) == 1:
-                show_phone(*args)
+                print(show_phone(*args))
             elif command == "all" and len(args) == 0:
-                show_all()
+                print(show_all())
             else:
                 print("Invalid command.")
 
