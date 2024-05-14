@@ -1,6 +1,3 @@
-contacts = {}
-
-
 def input_error(func):
     def inner(*args, **kwargs):
         try:
@@ -12,8 +9,8 @@ def input_error(func):
         except IndexError:
             return "Enter the argument for the command"
     return inner
-
-
+        
+        
 def parse_input(user_input):
     cmd, *args = user_input.split()
     cmd = cmd.strip().lower()
@@ -24,59 +21,53 @@ def parse_input(user_input):
 def add_contact(args, contacts):
     name, phone = args
     contacts[name] = phone
-    return "Contact added."
+    return f"Contact {name} added."
 
 
 @input_error
-def change_contact(name, new_phone):
+def change_contact(args, contacts):
+    name, phone = args
     if name in contacts:
-        contacts[name] = new_phone
-        return "Contact updated."
+        contacts[name] = phone
+        return f"Contact {name} changed."
     else:
-        return "Contact not found."
-
-
+        return f"Contact {name} not found!"
+    
+    
 @input_error
-def show_phone(name):
-    if name in contacts:
-        return contacts[name]
+def get_phone(args, contacts):
+    if not args == []:
+        name = args[0]
+        if name in contacts:
+            return contacts.get(name)
     else:
-        return "Contact not found."
-
-
-@input_error
-def show_all():
-    if contacts:
-        for name, phone in contacts.items():
-            return f"{name}: {phone}"
-    else:
-        return "No contacts saved."
-
-
+        return f"Contact not found!"
+    
+    
 def main():
-    print("Welcome! I'm your console assistant.")
+    contacts = {}
+    print("Welcome! I'm your console assistant")
 
     while True:
-        user_input = input("Enter command (type 'exit' to quit): ").lower()
-
-        if user_input == "exit" or user_input == "close":
-            print("Goodbye!")
-            break
-        elif user_input == "hello":
-            print("How can I help you?")
+        user_input = input("Enter command (type 'exit' or 'close' to quit): ")        
+        if not user_input or user_input.strip() == "":
+            command = ""
         else:
-            parts = user_input.split()
-            command = parts[0]
-            args = parts[1:] if len(parts) > 1 else []
-
-            if command == "add" and len(args) == 2:
-                print(add_contact(*args))
-            elif command == "change" and len(args) == 2:
-                print(change_contact(*args))
-            elif command == "phone" and len(args) == 1:
-                print(show_phone(*args))
-            elif command == "all" and len(args) == 0:
-                print(show_all())
+            command, *args = parse_input(user_input)        
+            if command in ["close", "exit"]:
+                print("Goodbye!")
+                break
+            elif command == "hello":
+                print("How can I help you?")
+            elif command == "add":
+                print(add_contact(args, contacts))
+            elif command == "change":
+                print(change_contact(args, contacts))
+            elif command == "phone":
+                print(get_phone(args, contacts))
+            elif command == "all":
+                for key, value in contacts.items():
+                    print(f'{key}: {value}')
             else:
                 print("Invalid command.")
 
